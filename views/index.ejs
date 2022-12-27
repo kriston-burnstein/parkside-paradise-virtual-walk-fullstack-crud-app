@@ -5,11 +5,46 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Parkside Paradise Virtual Walk App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
+    
 <body>
-    <h1>Welcome to Parkside Paradise Virtual Walks</h1>
+    <h1>Current National Parks</h1>
+    <ul class="parks">
+    <% for(let i=0; i < info.length; i++) {%>
+        <li class="park">
+            <span><%= info[i].parkName %></span>
+            <span><%= info[i].parkLocation %></span>
+            <span><a href="<%= info[i].parkVideo %>" target="_blank">Take a Walk</a></span>
+            <span><%= info[i].likes %></span>
+            <span class='fa fa-thumbs-up'></span>
+            <span class='fa fa-trash'></span>
+        </li>
+    <% } %>
+    </ul>
+
+    <h2>Add A Park:</h2>
+
+    <form action="/addPark" method="POST">
+        <input type="text" placeholder="Park Official Name" name="parkName">
+        <input type="text" placeholder="Park Location" name="parkLocation">
+        <input type="text" placeholder="Park Video https://" name="parkVideo">
+
+        <input type="submit">
+    </form>
+    
     <p>To use this api, please add your requested US National Park's short name to this url: https://parkside-virtual-walk-api.herokuapp.com/api/[park's short name]</p>
     <p>Examples of a park's short name would be Yellowstone (for Yellowstone National Park), or Olympic (for Olympic National Park).</p>
     <p>Enjoy your walk!</p> 
+
+    <script src='js/main.js'></script>
 </body>
 </html>
+
+    
+    
+    
+    
+    
+    
