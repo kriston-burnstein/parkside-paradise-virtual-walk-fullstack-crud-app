@@ -23,39 +23,39 @@ app.use(cors())
 
 
 
-const parks = {
-    'arches':{
-        'parkFullName': 'Arches National Park',
-        'location': 'Utah State, USA',
-        'video': 'https://www.youtube.com/watch?v=oHs6dIEuA9Q'
-    },
-    'olympic': {
-        'parkFullName': 'Olympic National Park',
-        'location': 'Washington State, USA',
-        'video': 'https://www.youtube.com/watch?v=9frdQgL9WlQ' 
-    },
-    'redwood': {
-        'parkFullName': 'Redwood National Park',
-        'location': 'California State, USA',
-        'video': 'https://www.youtube.com/watch?v=IOEGIGx8rr4'
-    },
-    'yellowstone': {
-        'parkFullName': 'Yellowstone National Park',
-        'location': 'Wyoming State, USA',
-        'video': 'https://www.youtube.com/watch?v=ATsJFCtl-wk'
-    },
-    'zion': {
-        'parkFullName': 'Zion National Park',
-        'location': 'Utah State, USA',
-        'video': 'https://www.youtube.com/watch?v=YsCUEnQifPE'
-    }, 
-    'not found': {
-        'parkFullName': 'not found',
-        'location': 'not found',
-        'video': 'not found'
-    }
+// const parks = {
+//     'arches':{
+//         'parkFullName': 'Arches National Park',
+//         'location': 'Utah State, USA',
+//         'video': 'https://www.youtube.com/watch?v=oHs6dIEuA9Q'
+//     },
+//     'olympic': {
+//         'parkFullName': 'Olympic National Park',
+//         'location': 'Washington State, USA',
+//         'video': 'https://www.youtube.com/watch?v=9frdQgL9WlQ' 
+//     },
+//     'redwood': {
+//         'parkFullName': 'Redwood National Park',
+//         'location': 'California State, USA',
+//         'video': 'https://www.youtube.com/watch?v=IOEGIGx8rr4'
+//     },
+//     'yellowstone': {
+//         'parkFullName': 'Yellowstone National Park',
+//         'location': 'Wyoming State, USA',
+//         'video': 'https://www.youtube.com/watch?v=ATsJFCtl-wk'
+//     },
+//     'zion': {
+//         'parkFullName': 'Zion National Park',
+//         'location': 'Utah State, USA',
+//         'video': 'https://www.youtube.com/watch?v=YsCUEnQifPE'
+//     }, 
+//     'not found': {
+//         'parkFullName': 'not found',
+//         'location': 'not found',
+//         'video': 'not found'
+//     }
 
-}
+// }
 
 // app.get('/', (request, response) => {
 //     response.sendFile(__dirname + '/index.html')
@@ -82,31 +82,60 @@ app.post('/addPark', (request, response) => {
 
 
 
+app.put('/addOneLike', (request, response) => {
+    db.collection('parks').updateOne({parkName: request.body.parkNameS, parkLocation: request.body.parkLocationS, parkVideo: request.body.parkVideoS, likes: request.body.likesS},{
+        $set: {
+            likes:request.body.likesS + 1
+          }
+    },{
+        sort: {_id: -1},
+        upsert: true
+    })
+    .then(result => {
+        console.log('Added One Like')
+        response.json('Like Added')
+    })
+    .catch(error => console.error(error))
 
-
-
-
-
-
-
-
-
-
-
-
-
-app.get('/api', (request, response) => {
-    response.json(parks)
 })
 
-app.get('/api/:name', (request, response) => {
-    const parkShortName = request.params.name.toLowerCase()
-    if (parks[parkShortName]) {
-        response.json(parks[parkShortName])
-    }else {
-        response.json(parks['not found'])
-    }
-} )
+// app.delete('/deleteRapper', (request, response) => {
+//     db.collection('rappers').deleteOne({stageName: request.body.stageNameS})
+//     .then(result => {
+//         console.log('Rapper Deleted')
+//         response.json('Rapper Deleted')
+//     })
+//     .catch(error => console.error(error))
+
+// })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// app.get('/api', (request, response) => {
+//     response.json(parks)
+// })
+
+// app.get('/api/:name', (request, response) => {
+//     const parkShortName = request.params.name.toLowerCase()
+//     if (parks[parkShortName]) {
+//         response.json(parks[parkShortName])
+//     }else {
+//         response.json(parks['not found'])
+//     }
+// } )
 
 
 app.listen(process.env.PORT || PORT, () => {
