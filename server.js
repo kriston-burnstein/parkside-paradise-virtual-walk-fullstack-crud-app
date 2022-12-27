@@ -99,15 +99,15 @@ app.put('/addOneLike', (request, response) => {
 
 })
 
-// app.delete('/deleteRapper', (request, response) => {
-//     db.collection('rappers').deleteOne({stageName: request.body.stageNameS})
-//     .then(result => {
-//         console.log('Rapper Deleted')
-//         response.json('Rapper Deleted')
-//     })
-//     .catch(error => console.error(error))
+app.delete('/deletePark', (request, response) => {
+    db.collection('parks').deleteOne({parkName: request.body.parkNameS})
+    .then(result => {
+        console.log('Park Deleted')
+        response.json('Park Deleted')
+    })
+    .catch(error => console.error(error))
 
-// })
+})
 
 
 
